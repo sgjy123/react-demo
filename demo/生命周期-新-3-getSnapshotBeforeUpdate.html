@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>生命周期-新-3-getSnapshotBeforeUpdate</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<h2>
+    生命周期-新-3-getSnapshotBeforeUpdate
+</h2>
+<div id="app"></div>
+<script type="text/babel">
+    class Count extends React.Component {
+        // 构造器
+        constructor(props) {
+            console.log('Count---constructor');
+            super(props);
+            this.state = {
+                count: 0
+            }
+        }
+        add = ()=>{
+            let {count} = this.state;
+            this.setState({
+                count: count+1
+            })
+        };
+        force = ()=>{
+            // 强制更新-不受shouldComponentUpdate约束
+            this.forceUpdate();
+        };
+        // 当前版本不能与废弃的生命函数同时存在,
+        static getDerivedStateFromProps(props, state) {
+            console.log('Count---getDerivedStateFromProps',props,state);
+            return props
+        }
+        // 在最近一次渲染输出（提交到 DOM 节点）之前调用
+        getSnapshotBeforeUpdate(prevProps,prevState) {
+            console.log('Count---getSnapshotBeforeUpdate',prevProps,prevState);
+            return null
+        }
+        // 当setState被调用-会调用shouldComponentUpdate询问是否更新组件
+        shouldComponentUpdate() {
+            console.log('Count---shouldComponentUpdate');
+            // 只能返回布尔值，当为false时，永远都不更
+            return true;
+        }
+        // 组件将要更新-新版本改名-下一版本可能弃用
+        /*componentWillUpdate() {
+            console.log('Count---componentWillUpdate');
+        }*/
+        // 组件已经更新完毕
+        componentDidUpdate(prevProps, prevState, snapshot) {
+            console.log('Count---componentDidUpdate',prevProps,prevState,snapshot);
+        }
+        /*// 组件将要挂载--新版本改名-下一版本可能弃用
+        componentWillMount() {
+            console.log('Count---componentWillMount');
+        }*/
+        // 组件挂载DOM
+        render() {
+            console.log('Count---render');
+            let {count} = this.state;
+            return (
+                <div>
+                    <h1>点击下面按钮，数字加1，{count}</h1>
+                    <button type="button" onClick={this.add}>点我+1</button>
+                    <button type="button" onClick={this.force}>强制更新</button>
+                </div>
+            )
+        }
+        // 组件已经挂载DOM上立即调用
+        componentDidMount() {
+            console.log('Count---componentDidMount');
+        }
+    }
+    ReactDOM.render(<Count count={100}/>,document.getElementById('app'));
+</script>
+</body>
+</html>

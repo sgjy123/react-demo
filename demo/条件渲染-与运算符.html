@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>条件渲染-与运算符</title>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+<script type="text/babel">
+    function Mailbox(props) {
+        const unreadMess = props.unreadMessages;
+        return (
+            <div>
+                <h1>hello!</h1>
+                {unreadMess.length > 0 &&
+                <h2>
+                    您有 {unreadMess.length} 条未读消息。
+                </h2>
+                }
+            </div>
+        )
+    }
+
+    const messages = ['React', 'Re: React', 'Re:Re: React', 're'];
+    ReactDOM.render(
+        <Mailbox unreadMessages={messages}/>,
+        document.getElementById('example')
+    );
+</script>
+</body>
+</html>

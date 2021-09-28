@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>非受控组件</title>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<h2>
+    非受控组件，现用现取
+</h2>
+<div id="app"></div>
+<script type="text/babel">
+    class Login extends React.Component {
+        submitLogin = (e)=>{
+            e.preventDefault();
+            const {userName, password} = this;
+            console.log(`用户名是：${userName.value}`);
+            console.log(`密码是：${password.value}`);
+        };
+        render() {
+            return (
+                <form onSubmit={this.submitLogin}>
+                    用户名：<input type="text" ref={(c)=>{this.userName = c;}} placeholder="请输入用户名" /><br/>
+                    密码：<input type="password" autoComplete="false" ref={(c)=>{this.password = c;}} placeholder="请输入密码" /><br/>
+                    <button>提交</button>
+                </form>
+            )
+        }
+    }
+    ReactDOM.render(<Login/>, document.getElementById('app'));
+</script>
+</body>
+</html>

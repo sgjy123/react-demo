@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>生命周期-旧-3</title>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<h2>
+    生命周期-旧-3
+</h2>
+<div id="app"></div>
+<script type="text/babel">
+    /*class Count extends React.Component {
+        // 构造器
+        constructor(props) {
+            console.log('Count---constructor');
+            super(props);
+            this.state = {
+                count: 0
+            }
+        }
+        add = ()=>{
+            let {count} = this.state;
+            this.setState({
+                count: count+1
+            })
+        };
+        force = ()=>{
+            // 强制更新-不受shouldComponentUpdate约束
+            this.forceUpdate();
+        };
+        // 当setState被调用-会调用shouldComponentUpdate询问是否更新组件
+        shouldComponentUpdate() {
+            console.log('Count---shouldComponentUpdate');
+            // 只能返回布尔值，当为false时，永远都不更
+            return true;
+        }
+        // 组件将要更新
+        componentWillUpdate() {
+            console.log('Count---componentWillUpdate');
+        }
+        // 组件已经更新完毕
+        componentDidUpdate() {
+            console.log('Count---componentDidUpdate');
+        }
+        // 组件将要挂载-新版本已经废弃
+        componentWillMount() {
+            console.log('Count---componentWillMount');
+        }
+        // 组件挂载DOM
+        render() {
+            console.log('Count---render');
+            let {count} = this.state;
+            return (
+                <div>
+                    <h1>点击下面按钮，数字加1，{count}</h1>
+                    <button type="button" onClick={this.add}>点我+1</button>
+                    <button type="button" onClick={this.force}>强制更新</button>
+                </div>
+            )
+        }
+        // 组件已经挂载DOM上立即调用
+        componentDidMount() {
+            console.log('Count---componentDidMount');
+        }
+    }*/
+    class A extends React.Component {
+        state = {
+          carName: '奔驰'
+        };
+        changeCar = ()=>{
+            this.setState({
+                carName: '宝马'
+            })
+        };
+        render() {
+            return (
+                <div>
+                    我是A组件，
+                    <button type="button" onClick={this.changeCar}>换车</button>
+                    <B carName={this.state.carName}/>
+                </div>
+            )
+        }
+    }
+    class B extends React.Component {
+        // 传递props之前调用
+        componentWillReceiveProps() {
+            console.log('B---componentWillReceiveProps')
+        }
+        // 应该更新
+        shouldComponentUpdate() {
+            console.log('B---shouldComponentUpdate');
+            return true;
+        }
+        // 组件将要更新
+        componentWillUpdate() {
+            console.log('B---componentWillUpdate')
+        }
+        // 组件更新完毕
+        componentDidUpdate() {
+            console.log('B---componentDidUpdate')
+        }
+        render() {
+            console.log('B---render');
+            return (
+                <div>我是B组件，我开的车是：{this.props.carName}</div>
+            )
+        }
+    }
+    ReactDOM.render(<A/>,document.getElementById('app'));
+</script>
+</body>
+</html>

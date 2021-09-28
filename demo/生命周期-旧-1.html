@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>生命周期-旧-1</title>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<h2>
+    生命周期-旧-1
+</h2>
+<div id="app"></div>
+<script type="text/babel">
+    class Count extends React.Component {
+        // 构造器
+        constructor(props) {
+            console.log('Count---constructor');
+            super(props);
+            this.state = {
+                count: 0
+            }
+        }
+        add = ()=>{
+            let {count} = this.state;
+            this.setState({
+                count: count+1
+            })
+        };
+        destroy = ()=>{
+            ReactDOM.unmountComponentAtNode(document.getElementById('app'))
+        };
+        // 组件将要挂载-新版本已经废弃
+        componentWillMount() {
+            console.log('Count---componentWillMount');
+        }
+        // 组件挂载DOM
+        render() {
+            console.log('Count---render');
+            let {count} = this.state;
+            return (
+                <div>
+                    <h1>点击下面按钮，数字加1，{count}</h1>
+                    <button type="button" onClick={this.add}>点我+1</button>
+                    <button type="button" onClick={this.destroy}>销毁组件</button>
+                </div>
+            )
+        }
+        // 组件已经挂载DOM上立即调用
+        componentDidMount() {
+            console.log('Count---componentDidMount');
+        }
+        // 组件在销毁之前调用
+        componentWillUnmount() {
+            console.log('Count---componentWillUnmount');
+        }
+    }
+    ReactDOM.render(<Count/>,document.getElementById('app'));
+</script>
+</body>
+</html>

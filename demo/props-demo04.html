@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>props验证</title>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.bootcss.com/prop-types/15.6.1/prop-types.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script type="text/babel">
+    const title = '菜鸟教程';
+    class MyTitle extends React.Component {
+        render() {
+            return (
+                <h1>hello, {this.props.title}</h1>
+            )
+        }
+    }
+    MyTitle.propTypes = {
+        title: PropTypes.string
+    };
+    ReactDOM.render(<MyTitle title={title} />, document.getElementById('app'));
+</script>
+</body>
+</html>

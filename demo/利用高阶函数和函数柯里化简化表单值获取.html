@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>利用高阶函数和函数柯里化简化表单值获取</title>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<h2>
+    利用高阶函数和函数柯里化简化表单值获取
+</h2>
+<div id="app"></div>
+<script type="text/babel">
+    class Login extends React.Component {
+        // 初始化state
+        state = {
+            username: '',
+            password: ''
+        };
+        // 高阶函数
+        changeFormData = (dataType) => {
+            // console.log(dataType);
+            return (event) => {
+                this.setState({
+                   [dataType]: event.target.value
+                })
+            }
+        };
+        submitLogin = (e) => {
+            e.preventDefault();
+            const {username, password} = this.state;
+            console.log(`用户名${username}`);
+            console.log(`密码${password}`);
+        };
+
+        render() {
+            return (
+                <form onSubmit={this.submitLogin}>
+                    用户名：<input onChange={this.changeFormData('username')} type="text" placeholder="请输入用户名"/><br/>
+                    密码：<input onChange={this.changeFormData('password')} type="password" autoComplete="false"
+                              placeholder="请输入密码"/><br/>
+                    <button>提交</button>
+                </form>
+            )
+        }
+    }
+
+    ReactDOM.render(<Login/>, document.getElementById('app'));
+</script>
+</body>
+</html>
